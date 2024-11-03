@@ -14,11 +14,18 @@ public class Student {
     @Column(unique = true)
     private String email;
     private int age;
-    @Column(updatable = false)
-    private String someColumn;//for example, createdAt
+    @OneToOne(
+            mappedBy = "student",
+            cascade = CascadeType.ALL
+    )
+    private StudentProfile studentProfile;
     public Student() {
 
     }
+
+    @ManyToOne
+    @JoinColumn(name="school_id")
+    private  School school;
 
     public Student(String firstname, String lastname, String email, int age) {
         this.firstname = firstname;
@@ -65,5 +72,12 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public School getSchool() {
+        return school;
+    }
+    public void setSchool(School school) {
+        this.school = school;
     }
 }
